@@ -16,8 +16,9 @@ public class Test1 {
 
         try {
 
+
             session = factory.getCurrentSession();
-            Employee emp = new Employee("Zaur", "Tregulov", "IT", 500);
+            Employee emp = new Employee("Petr", "Petrov", "HR", 600);
             session.beginTransaction(); // открываем транзакцию
 
             session.save(emp);
