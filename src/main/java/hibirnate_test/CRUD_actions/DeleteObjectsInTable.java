@@ -1,11 +1,12 @@
-package hibirnate_test.entity;
+package hibirnate_test.CRUD_actions;
 
+import hibirnate_test.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 
-public class GetObjectFromTableByID {
+public class DeleteObjectsInTable {
     public static void main(String[] args) {
         Session session;
 
@@ -18,20 +19,17 @@ public class GetObjectFromTableByID {
 
 
             session = factory.getCurrentSession();
-            Employee emp = new Employee("Elena", "Petrova", "Sales", 850);
-            session.beginTransaction(); // открываем транзакцию
-
-            session.save(emp);
-            session.getTransaction().commit();
-
-            int myId = emp.getId();
-            session = factory.getCurrentSession();
-
             session.beginTransaction();
-            Employee employee = (Employee) session.get(Employee.class, myId);
-            session.getTransaction().commit();
 
-            System.out.println(employee);
+//            Employee employee = (Employee) session.get(Employee.class, 5);
+//            session.delete(employee);
+
+            session.createQuery("delete Employee where name ='Ivan'").executeUpdate();
+
+
+            session.getTransaction().commit();
+            System.out.println("Done!");
+
         } finally {
             factory.close();
         }

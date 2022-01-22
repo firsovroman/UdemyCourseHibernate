@@ -1,13 +1,12 @@
-package hibirnate_test.entity;
+package hibirnate_test.CRUD_actions;
 
+import hibirnate_test.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import java.util.List;
 
-
-public class GetListOfObjectsFromTable {
+public class GetObjectFromTableByID {
     public static void main(String[] args) {
         Session session;
 
@@ -20,18 +19,20 @@ public class GetListOfObjectsFromTable {
 
 
             session = factory.getCurrentSession();
-            session.beginTransaction();
+            Employee emp = new Employee("Elena", "Petrova", "Sales", 850);
+            session.beginTransaction(); // открываем транзакцию
 
-            List<Employee> emps = session.createQuery("from Employee where name='Ivan'").list();
-
-            for(Employee e: emps) {
-                System.out.println(e);
-            }
-
-
+            session.save(emp);
             session.getTransaction().commit();
-            System.out.println("Done!");
 
+            int myId = emp.getId();
+            session = factory.getCurrentSession();
+
+            session.beginTransaction();
+            Employee employee = (Employee) session.get(Employee.class, myId);
+            session.getTransaction().commit();
+
+            System.out.println(employee);
         } finally {
             factory.close();
         }

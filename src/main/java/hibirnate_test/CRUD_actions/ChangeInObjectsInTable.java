@@ -1,11 +1,12 @@
-package hibirnate_test.entity;
+package hibirnate_test.CRUD_actions;
 
+import hibirnate_test.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 
-public class PutIntoTableExample {
+public class ChangeInObjectsInTable {
     public static void main(String[] args) {
         Session session;
 
@@ -18,11 +19,17 @@ public class PutIntoTableExample {
 
 
             session = factory.getCurrentSession();
-            Employee emp = new Employee("Ivan", "Ivanov", "HR", 650);
-            session.beginTransaction(); // открываем транзакцию
+            session.beginTransaction();
 
-            session.save(emp);
+
+//            Employee employee = (Employee) session.get(Employee.class, 1);
+//            employee.setSalary(1500);
+
+            session.createQuery("update Employee set salary = '1000' where name = 'Ivan'").executeUpdate();
+
             session.getTransaction().commit();
+            System.out.println("Done!");
+
         } finally {
             factory.close();
         }

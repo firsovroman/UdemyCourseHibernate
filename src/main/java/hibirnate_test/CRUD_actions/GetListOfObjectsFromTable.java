@@ -1,11 +1,14 @@
-package hibirnate_test.entity;
+package hibirnate_test.CRUD_actions;
 
+import hibirnate_test.entity.Employee;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.List;
 
-public class DeleteObjectsInTable {
+
+public class GetListOfObjectsFromTable {
     public static void main(String[] args) {
         Session session;
 
@@ -20,10 +23,11 @@ public class DeleteObjectsInTable {
             session = factory.getCurrentSession();
             session.beginTransaction();
 
-//            Employee employee = (Employee) session.get(Employee.class, 5);
-//            session.delete(employee);
+            List<Employee> emps = session.createQuery("from Employee where name='Ivan'").list();
 
-            session.createQuery("delete Employee where name ='Ivan'").executeUpdate();
+            for(Employee e: emps) {
+                System.out.println(e);
+            }
 
 
             session.getTransaction().commit();
